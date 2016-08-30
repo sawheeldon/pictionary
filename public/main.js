@@ -19,7 +19,7 @@ var pictionary = function() {
         var position = {x: event.pageX - offset.left,
                         y: event.pageY - offset.top};
         draw(position);
-    });
+    }); 
 };
 
 socket.on('connect', function(draw) {
