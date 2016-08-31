@@ -4,7 +4,7 @@ var incognitoMode = false;
 
 var pictionary = function() {
     
-    var canvas, context, drawing;
+    var canvas, context, drawing, guessBox;
 
     var draw = function(position) {
         context.beginPath();
@@ -38,10 +38,22 @@ var pictionary = function() {
             socket.emit('draw', position);
         }
     });
-    
-    
-     socket.on('draw', draw);
-    
+
+    var onKeyDown = function(event) {
+    if (event.keyCode != 13) { // Enter
+        return;
+    }
+
+    console.log(guessBox.val());
+    guessBox.val('');
+};
+
+        guessBox = $('#guess input');
+        guessBox.on('keydown', onKeyDown);
+            
+            
+        socket.on('draw', draw);
+            
     
 };
 
