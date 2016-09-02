@@ -1,6 +1,7 @@
 var http = require('http');
 var express = require('express');
 var socket_io = require('socket.io');
+var seed = require('./db/seed');
 
 var app = express();
 app.use(express.static('public'));
@@ -15,6 +16,12 @@ io.on('connect', function(socket) {
     socket.on('draw', function(position) {
         socket.broadcast.emit('draw', position);
     });
+    
+    socket.on('guess', function(addGuess){
+        socket.broadcast.emit('guess', addGuess);
+    });
 });
+
+
 
 server.listen(process.env.PORT || 8080);

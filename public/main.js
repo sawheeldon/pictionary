@@ -4,7 +4,21 @@ var incognitoMode = false;
 
 var pictionary = function() {
     
-    var canvas, context, drawing, guessBox;
+    var canvas, context, drawing, guessBox, word, me;
+    
+    var WORDS = [];
+    console.log(WORDS);
+    
+      //Choosing word for drawer
+    var wordPicker = function(wordList) {
+    return wordList[Math.floor(Math.random()*(wordList.length-1))];
+    };
+    
+    //Displaying word to draw
+    var setWord = function(word) {
+            $('#word').text('You are the drawer! Your word is: ' + word).show();
+            $('#guess').hide();
+    };
 
     var draw = function(position) {
         context.beginPath();
@@ -38,20 +52,31 @@ var pictionary = function() {
             socket.emit('draw', position);
         }
     });
+    
+    //Guesses
+    // Show guess history
+    var addGuess = function(obj) {
+        $('#guess').append('<div><strong><span class="highlight">' + obj.user + ':</span></strong> ' + obj.guess + '</div>');
+    };
+    
+    //Capture guess input, return input
 
-    var onKeyDown = function(event) {
-    if (event.keyCode != 13) { // Enter
-        return;
-    }
+    guessBox = $('#guess input');
+    guessBox.on('keydown', function(event) {
+        if (event.keyCode != 13) {
+            return;
+        }
+        var guess = guessBox.val();
+        addGuess({
+            user: 'Me',
+            guess: guess
+        });
+        socket.emit('guess', guess);
+        guessBox.val('');
+    });
 
-    console.log(guessBox.val());
-    guessBox.val('');
-};
 
-        guessBox = $('#guess input');
-        guessBox.on('keydown', onKeyDown);
-            
-            
+        socket.on('guess', addGuess);    
         socket.on('draw', draw);
             
     
