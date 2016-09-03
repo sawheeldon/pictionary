@@ -32,3 +32,22 @@ canvas {
     color: #FFB5BB;
     font-size: 1.5rem;
     }
+    
+    .isDrawing,
+    .notDrawing {
+        margin-top: 1rem;
+    }
+    
+    .isDrawing {
+        background-color: #00b700;
+        color: #fff;
+    }
+    
+    .notDrawing {
+        border: 2px solid #020181;
+    }
+    
+#clearButton{
+    text-align:center;
+}
+
