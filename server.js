@@ -8,32 +8,29 @@ app.use(express.static('public'));
 var server = http.Server(app);
 var io = socket_io(server);
 
-function addUser(username) {
-    var user = {
-        name: username,
-        drawer:false,
-        waiting: true
-    };
-  return user.id;
-}  
 
-io.on('connect', function(socket) {
+io.on('connection', function (socket) {
+    
+    //logs the new client connected message
+    console.log('New client connected');
+
     socket.on('draw', function(position) {
-        socket.broadcast.emit('draw', position);
+        console.log('Received drawing', position);
+        socket.broadcast.emit('draw',position);
     });
     
-    socket.on('addUser', function(username) {
-    socket.emit= addUser(username);
-    });
-    
-    socket.on('guess', function(addGuess){
-        socket.broadcast.emit('guess', addGuess);
-    });
-    socket.on('clearCanvas', function (clear) {
+    socket.on('clearCanvas', function () {
         io.emit('clearCanvas');
    });
+    
+    socket.on('guess',function(guess) {
+        console.log('User guessed',guess);
+        socket.broadcast.emit('guess',guess);
+    });
+
+    socket.on('disconnect', function() {
+        console.log('A user has disconnected');
+    });
+
 });
-
-
-
 server.listen(process.env.PORT || 8080);
