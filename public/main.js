@@ -1,6 +1,20 @@
 var drawing = false;
 var socket = io();
 
+// require("jsdom").env("", function(err, window) {
+//     if (err) {
+//         console.error(err);
+//         return;
+//     }
+ 
+//     var $ = require("jquery")(window);
+// });
+
+// var requirejs = require('requirejs');
+// var $ = require('jquery');
+
+
+
 var WORDS = [
     "word", "letter", "number", "person", "pen", "class", "people",
     "sound", "water", "side", "place", "man", "men", "woman", "women", "boy",

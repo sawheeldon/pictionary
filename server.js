@@ -1,12 +1,23 @@
 var http = require('http');
 var express = require('express');
 var socket_io = require('socket.io');
-
 var app = express();
 app.use(express.static('public'));
 
 var server = http.Server(app);
 var io = socket_io(server);
+//var $ = require("jquery");
+
+// var jsdom = require("jsdom");
+
+// jsdom.env(
+//   "https://iojs.org/dist/",
+//   ["http://code.jquery.com/jquery.js"],
+//   function (err, window) {
+//     console.log("there have been", window.$("a").length - 4, "io.js releases!");
+//   }
+// );
+
 
 
 io.on('connection', function (socket) {
